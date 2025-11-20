@@ -18,7 +18,7 @@ export const PostContent: React.FC<Props> = ({ content }) => {
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
           components={{
-            code({ node, inline, className, children, ...props }) {
+            code({ node, inline, className, children, ...props }: any) {
               const [copied, setCopied] = useState(false);
               const codeRef = useRef<HTMLElement | null>(null);
 

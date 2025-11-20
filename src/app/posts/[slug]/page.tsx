@@ -7,7 +7,7 @@ import { PostContent } from "@/components/posts/PostContent";
 import { Toc } from "@/components/posts/Toc";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {

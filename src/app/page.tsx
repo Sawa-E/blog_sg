@@ -49,7 +49,7 @@ export default function PostsPage() {
                 )}
                 {post.tags && post.tags.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-1">
-                    {post.tags.map((tag) => (
+                    {post.tags.map((tag: string) => (
                       <span
                         key={tag}
                         className="inline-flex items-center rounded-full bg-sky-50 px-2 py-[2px] text-[10px] text-sky-700 border border-sky-100"
