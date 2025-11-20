@@ -1,72 +1,53 @@
-// src/app/page.tsx
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
 
-export default function Home() {
-  const posts = getAllPostsMeta();
-  const latest = posts.slice(0, 5);
+export default function PostsPage() {
+  const posts = getAllPostsMeta().sort(
+    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+  );
 
   return (
+    // 背景は layout.tsx の body-sea を活かす
     <main className="min-h-screen text-gray-900">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* ヘッダー */}
-        <header className="flex items-center justify-between mb-10">
-          <Link href="/" className="site-title-sea">
-            そーがの日記
-          </Link>
-          <nav className="flex items-center gap-3 text-sm">
-            <Link href="/posts" className="link-sea">
-              記事一覧
+      <div className="max-w-4xl mx-auto px-4 py-10">
+        <h1 className="text-3xl font-bold mb-8">記事一覧</h1>
+
+        <div className="grid gap-6">
+          {posts.map((post) => (
+            <Link
+              href={`/posts/${post.slug}`}
+              key={post.slug}
+              className="block rounded-2xl border border-sky-100 bg-sky-50/20 p-6 shadow-sm hover:shadow-md hover:bg-sky-50/40 transition-all duration-200"
+            >
+              {/* 日付 */}
+              <div className="text-xs text-gray-500 mb-2">{post.date}</div>
+
+              {/* タイトル */}
+              <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+
+              {/* サマリ */}
+              {post.summary && (
+                <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                  {post.summary}
+                </p>
+              )}
+
+              {/* タグ（最後に表示） */}
+              {post.tags && post.tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {post.tags.map((tag: string) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </Link>
-          </nav>
-        </header>
-
-        {/* キャッチコピー */}
-        <section className="mb-8">
-          <h1 className="text-3xl font-bold mb-2 text-sky-800">
-            そーがの技術日記。
-          </h1>
-          <p className="text-sm text-gray-600">
-            ロボット、制御、プログラミング、日々のメモなどを
-            すこしずつ残していきます。
-          </p>
-        </section>
-
-        {/* 最新記事 */}
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-sky-800">最新の記事</h2>
-            <Link href="/posts" className="btn-sea">
-              すべての記事へ
-            </Link>
-          </div>
-
-          {latest.length === 0 ? (
-            <p className="text-sm text-gray-500">まだ記事がありません。</p>
-          ) : (
-            <ul className="space-y-4">
-              {latest.map((post) => (
-                <li
-                  key={post.slug}
-                  className="bg-white/80 rounded-xl border border-[#e2edf7] px-4 py-3 shadow-sm"
-                >
-                  <div className="text-[11px] text-gray-500 mb-1">
-                    {post.date}
-                  </div>
-                  <Link
-                    href={`/posts/${post.slug}`}
-                    className="text-base font-medium text-sky-800 hover:underline"
-                  >
-                    {post.title}
-                  </Link>
-                  {post.summary && (
-                    <p className="text-sm text-gray-700 mt-1">{post.summary}</p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+          ))}
+        </div>
       </div>
     </main>
   );

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
 
 export const metadata = {
-  title: "記事一覧 | そーがの日記",
+  title: "そーがの日記",
 };
 
 export default function PostsPage() {

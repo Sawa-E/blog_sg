@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
+import lineClamp from "@tailwindcss/line-clamp";
 
 const config: Config = {
   content: [
@@ -10,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  plugins: [typography],
+  plugins: [typography, lineClamp],
 };
 
 export default config;
