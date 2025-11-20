@@ -7,6 +7,9 @@ yarn-debug.log*
 pnpm-debug.log*
 .pnpm-debug.log*
 
+package-lock.json
+
+
 # ===========================================
 # Next.js ビルド成果物
 # ===========================================
