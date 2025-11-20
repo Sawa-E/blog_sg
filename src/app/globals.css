@@ -87,13 +87,6 @@ body {
   line-height: 1.55;
 }
 
-/* 背景を上品に（薄いグラデーション） */
-.prose-post-wrapper {
-  @apply p-6 rounded-xl;
-  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-  border: 1px solid #f0f0f0;
-}
-
 /* 見出し */
 .prose-post h1 {
   @apply text-3xl font-bold mt-10 mb-4;
@@ -148,4 +141,29 @@ body {
 .prose-post table th,
 .prose-post table td {
   @apply border border-gray-300 px-3 py-2;
+}
+
+/* --- 海のゆらぎ背景 --- */
+.wave-bg {
+  background: linear-gradient(
+    120deg,
+    rgba(125, 215, 255, 0.25),
+    rgba(165, 235, 255, 0.35),
+    rgba(195, 245, 255, 0.25)
+  );
+  background-size: 200% 200%;
+  animation: waveMove 6s ease-in-out infinite;
+  border-radius: 16px;
+}
+
+@keyframes waveMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
