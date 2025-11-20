@@ -1,4 +1,12 @@
 @import "tailwindcss";
+@import "highlight.js/styles/github-dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ここで Typography プラグインを有効化 */
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
@@ -23,4 +31,121 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== 海テーマ共通スタイル ===== */
+
+/* ページ背景をほんのり海っぽく */
+.body-sea {
+  background: radial-gradient(
+    circle at top,
+    #e0f4ff 0,
+    #ffffff 45%,
+    #f9fafb 100%
+  );
+}
+
+/* ヘッダー用タイトル */
+.site-title-sea {
+  @apply text-2xl font-bold tracking-tight text-sky-700;
+}
+
+/* リンク（共通） */
+.link-sea {
+  @apply text-sky-600 hover:text-sky-800 underline-offset-4 hover:underline;
+}
+
+/* 記事一覧やボタン用の“海ボタン” */
+.btn-sea {
+  @apply inline-flex items-center gap-1
+    rounded-full px-3 py-1.5 text-xs font-medium
+    bg-sky-500 text-white
+    shadow-sm
+    hover:bg-sky-600 transition-colors;
+}
+
+/* 記事カード（wrapper）を少し海っぽい白に */
+.prose-post-wrapper {
+  @apply p-6 rounded-xl;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+  border: 1px solid #e2edf7;
+}
+
+/* 記事本文内のリンクも海色に */
+.prose-post a {
+  @apply text-sky-600 hover:text-sky-800 underline-offset-2 hover:underline;
+}
+
+/* ===================================
+   ブログ記事用カスタム Typography
+   =================================== */
+
+.prose-post {
+  @apply prose prose-neutral max-w-none;
+
+  /* 行間を少し詰める（デフォルトは広すぎる） */
+  line-height: 1.55;
+}
+
+/* 背景を上品に（薄いグラデーション） */
+.prose-post-wrapper {
+  @apply p-6 rounded-xl;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  border: 1px solid #f0f0f0;
+}
+
+/* 見出し */
+.prose-post h1 {
+  @apply text-3xl font-bold mt-10 mb-4;
+}
+.prose-post h2 {
+  @apply text-2xl font-semibold mt-8 mb-3;
+}
+.prose-post h3 {
+  @apply text-xl font-semibold mt-6 mb-2;
+}
+
+/* 段落 */
+.prose-post p {
+  line-height: 1.55;
+  @apply text-[16px] mb-4;
+}
+
+/* 箇条書き */
+.prose-post ul,
+.prose-post ol {
+  @apply my-3 pl-5;
+}
+
+/* インラインコード */
+.prose-post :not(pre) > code {
+  @apply bg-gray-100 px-1.5 py-0.5 rounded text-[0.9em] text-gray-900 border border-gray-200;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* コードブロック（VSCode風ダーク） */
+.prose-post pre {
+  @apply rounded-lg overflow-x-auto text-sm my-3;
+  padding: 0.75rem 0.9rem;
+  background-color: #021626; /* 深海っぽいネイビー */
+  color: #f9fafb;
+}
+
+/* code 内の文字を少し上品に */
+.prose-post pre code {
+  @apply text-gray-100;
+}
+
+/* 引用 */
+.prose-post blockquote {
+  @apply border-l-4 border-blue-300 pl-4 italic text-gray-600 my-4;
+}
+
+/* 表（必要なら） */
+.prose-post table {
+  @apply border-collapse my-4 text-sm;
+}
+.prose-post table th,
+.prose-post table td {
+  @apply border border-gray-300 px-3 py-2;
 }
