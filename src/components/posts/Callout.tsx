@@ -1,26 +1,32 @@
 // src/components/posts/Callout.tsx
 import type { ReactNode } from "react";
 
+type CalloutType = "info" | "warning" | "tip" | "note";
+
 type CalloutProps = {
-  type?: "info" | "warning" | "tip" | "note";
+  type?: CalloutType;
   title?: string;
   children: ReactNode;
 };
 
-const colorMap = {
+const colorMap: Record<CalloutType, string> = {
   info: "border-sky-300 bg-sky-50/80 text-sky-900",
   warning: "border-amber-300 bg-amber-50/80 text-amber-900",
   tip: "border-emerald-300 bg-emerald-50/80 text-emerald-900",
   note: "border-slate-300 bg-slate-50 text-slate-900",
-} as const;
+};
 
-const iconMap = {
+const iconMap: Record<CalloutType, string> = {
   info: "💡",
   warning: "⚠️",
   tip: "✨",
   note: "📝",
-} as const;
+};
 
+/**
+ * Callout component for highlighting important information in blog posts
+ * Can be used in MDX content
+ */
 export function Callout({ type = "info", title, children }: CalloutProps) {
   const color = colorMap[type];
   const icon = iconMap[type];
@@ -33,7 +39,9 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
       `}
     >
       <div className="flex items-start gap-3">
-        <div className="mt-[2px] text-lg">{icon}</div>
+        <div className="mt-[2px] text-lg" aria-hidden="true">
+          {icon}
+        </div>
         <div>
           {title && <div className="font-semibold mb-1">{title}</div>}
           <div className="leading-relaxed">{children}</div>

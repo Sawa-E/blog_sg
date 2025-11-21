@@ -3,8 +3,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllPostsMeta, getPostBySlug } from "@/lib/posts/getAllPosts";
-import { PostContent } from "@/components/posts/PostContent";
-import { Toc } from "@/components/posts/Toc";
+// import { PostContent } from "@/components/posts/PostContent";
+// import { Toc } from "@/components/posts/Toc";
 import { parseMdx } from "@/lib/posts/parseMdx";
 
 type Props = {
@@ -37,11 +37,12 @@ export default async function PostPage({ params }: Props) {
             <h1 className="text-3xl font-bold mb-6">{post.title}</h1>
 
             {/* MDXRemote 用の source を渡す */}
-            <PostContent source={mdxSource} />
+            {/* <PostContent source={mdxSource} /> */}
+            <div>Test - MDX rendering disabled</div>
           </article>
 
           {/* 右：目次 */}
-          <Toc />
+          {/* <Toc /> */}
         </div>
 
         <div className="mt-10">

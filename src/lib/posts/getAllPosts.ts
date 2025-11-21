@@ -6,16 +6,27 @@ import type { PostMeta, Post } from "./type";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
-// ファイル名 "YYYY-MM-DD-slug.mdx" から slug 部分だけ取り出す
+/**
+ * Extract slug from filename
+ * Expected format: YYYY-MM-DD-slug.mdx
+ * 
+ * @param filename - The filename to extract slug from
+ * @returns The extracted slug
+ */
 function extractSlug(filename: string): string {
-  // 例: 2025-11-20-hello-world.mdx
-  const base = filename.replace(/\.mdx?$/, ""); // 拡張子除去
-  // 最初の 10 文字は "YYYY-MM-DD"
-  const rest = base.slice(11); // 11文字目以降が slug
-  return rest || base; // 念のため slug が空なら base を返す
+  const base = filename.replace(/\.mdx?$/, ""); // Remove extension
+  // First 10 characters are "YYYY-MM-DD", skip the next hyphen
+  const rest = base.slice(11); // Characters from position 11 onwards are the slug
+  return rest || base; // Fallback to base if slug is empty
 }
 
-// 1ファイルから PostMeta を作る
+/**
+ * Get post metadata from a single file
+ * 
+ * @param filePath - Full path to the post file
+ * @param filename - Filename of the post
+ * @returns Post metadata
+ */
 function getPostMetaFromFile(filePath: string, filename: string): PostMeta {
   const fileContents = fs.readFileSync(filePath, "utf-8");
   const { data } = matter(fileContents);
@@ -36,7 +47,12 @@ function getPostMetaFromFile(filePath: string, filename: string): PostMeta {
   };
 }
 
-// 全記事のメタ情報を取得（本文なし）
+/**
+ * Get all posts metadata (without content)
+ * Posts are sorted by date in descending order
+ * 
+ * @returns Array of post metadata
+ */
 export function getAllPostsMeta(): PostMeta[] {
   if (!fs.existsSync(POSTS_DIR)) {
     return [];
@@ -51,11 +67,16 @@ export function getAllPostsMeta(): PostMeta[] {
     return getPostMetaFromFile(fullPath, filename);
   });
 
-  // date 降順にソート
+  // Sort by date in descending order
   return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-// slug から本文つきで取得する関数（詳細ページ用）
+/**
+ * Get a single post by slug (including content)
+ * 
+ * @param slug - The post slug to retrieve
+ * @returns Full post data with content, or null if not found
+ */
 export function getPostBySlug(slug: string): Post | null {
   if (!fs.existsSync(POSTS_DIR)) {
     return null;
@@ -75,7 +96,7 @@ export function getPostBySlug(slug: string): Post | null {
 
   const fullPath = path.join(POSTS_DIR, targetFile);
   const fileContents = fs.readFileSync(fullPath, "utf-8");
-  const { data, content } = matter(fileContents);
+  const { content } = matter(fileContents);
 
   const meta = getPostMetaFromFile(fullPath, targetFile);
 

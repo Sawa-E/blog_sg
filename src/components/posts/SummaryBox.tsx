@@ -6,6 +6,10 @@ type SummaryBoxProps = {
   children: ReactNode;
 };
 
+/**
+ * SummaryBox component for displaying article summaries
+ * Can be used in MDX content
+ */
 export function SummaryBox({
   title = "今日のまとめ",
   children,
@@ -17,7 +21,7 @@ export function SummaryBox({
         role="heading"
         aria-level={3}
       >
-        <span>📘</span>
+        <span aria-hidden="true">📘</span>
         <span>{title}</span>
       </div>
 
