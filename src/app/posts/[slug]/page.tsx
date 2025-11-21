@@ -6,6 +6,7 @@ import { getAllPostsMeta, getPostBySlug } from "@/lib/posts/getAllPosts";
 import { Toc } from "@/components/posts/Toc";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/posts/mdxComponents";
+import type { Metadata } from "next";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import remarkMath from "remark-math";
