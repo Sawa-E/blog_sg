@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
+import { ProfileCard } from "@/components/home/ProfileCard";
 
 export default function HomePage() {
   const posts = getAllPostsMeta()
@@ -13,18 +14,14 @@ export default function HomePage() {
         <section className="mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold mb-3">そーがの日記</h1>
           <p className="text-sm text-gray-600 mb-4">
-            日々の勉強メモやロボット・開発の進捗を、海のそよ風みたいにゆるく書いていくブログです。
+            日々のメモや進捗を、海のそよ風みたいにゆるく書いていくブログです。
           </p>
-
-          <div className="flex flex-wrap gap-3">
-            <Link href="/posts" className="btn-sea">
-              記事一覧を見る
-            </Link>
-            <span className="text-xs text-gray-500">
-              Cloudflare Pages + Next.js + TypeScript + MDX
-            </span>
-          </div>
         </section>
+
+        {/* 👇 自己紹介カードをここに追加 */}
+        <ProfileCard />
+
+        <div className="my-10 border-t border-gray-300" />
 
         {/* 最近の記事 */}
         <section>
@@ -39,9 +36,7 @@ export default function HomePage() {
           </div>
 
           {posts.length === 0 && (
-            <p className="text-sm text-gray-500">
-              まだ記事がありません。最初のMDX記事を書いてみましょう。
-            </p>
+            <p className="text-sm text-gray-500">まだ記事がありません。</p>
           )}
 
           <div className="grid gap-6">

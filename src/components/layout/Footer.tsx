@@ -22,9 +22,14 @@ export function Footer() {
             href="https://github.com/Sawa-E"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-sky-700 hover:underline underline-offset-4"
+            aria-label="GitHub を開く"
+            className="hover:scale-110 transition-transform"
           >
-            GitHub
+            <img
+              src="/icons/github-mark.svg"
+              alt="GitHubアイコン"
+              className="w-6 h-6"
+            />
           </a>
           {/* 将来 X(Twitter) などもここに追加 */}
         </div>

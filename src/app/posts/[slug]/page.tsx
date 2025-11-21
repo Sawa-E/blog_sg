@@ -8,11 +8,28 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/posts/mdxComponents";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import rehypeMdxImportMedia from "rehype-mdx-import-media";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: "記事が見つかりません | そーがの日記",
+    };
+  }
+
+  return {
+    title: `${post.title} | そーがの日記`,
+    description: post.summary ?? "そーがの日記のブログ記事",
+  };
+}
 
 export function generateStaticParams() {
   return getAllPostsMeta().map((post) => ({
@@ -44,8 +61,8 @@ export default async function PostPage({ params }: Props) {
                   components={mdxComponents}
                   options={{
                     mdxOptions: {
-                      remarkPlugins: [remarkGfm],
-                      rehypePlugins: [rehypeHighlight, rehypeMdxImportMedia],
+                      remarkPlugins: [remarkGfm, remarkMath],
+                      rehypePlugins: [rehypeHighlight, rehypeKatex],
                     },
                   }}
                 />
