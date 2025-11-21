@@ -82,12 +82,21 @@ body {
 
 .prose-post {
   @apply prose prose-neutral max-w-none;
-
-  /* 行間を少し詰める（デフォルトは広すぎる） */
-  line-height: 1.55;
+  line-height: 1.65;
+  font-size: 16.5px;
 }
 
 /* 見出し */
+.prose-post h1::before {
+  content: "🌊 ";
+}
+.prose-post h2::before {
+  content: "🐬 ";
+}
+.prose-post h3::before {
+  content: "🐟 ";
+}
+
 .prose-post h1 {
   @apply text-3xl font-bold mt-10 mb-4;
 }
@@ -118,10 +127,9 @@ body {
 
 /* コードブロック（VSCode風ダーク） */
 .prose-post pre {
-  @apply rounded-lg overflow-x-auto text-sm my-3;
-  padding: 0.75rem 0.9rem;
-  background-color: #021626; /* 深海っぽいネイビー */
-  color: #f9fafb;
+  @apply rounded-xl px-4 py-3 my-5 text-sm;
+  background: #03263b;
+  border: 1px solid #124d6c;
 }
 
 /* code 内の文字を少し上品に */
@@ -131,7 +139,10 @@ body {
 
 /* 引用 */
 .prose-post blockquote {
-  @apply border-l-4 border-blue-300 pl-4 italic text-gray-600 my-4;
+  @apply border-l-4 border-sky-300 pl-4 py-2 my-4;
+  background: #f0faff;
+  border-radius: 8px;
+  color: #555;
 }
 
 /* 表（必要なら） */
@@ -166,4 +177,17 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* --- SNSシェアボタン（海風デザイン） --- */
+.sns-btn-sea {
+  @apply w-9 h-9 flex items-center justify-center rounded-full text-white;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.sns-btn-sea:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
 }

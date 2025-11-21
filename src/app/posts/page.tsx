@@ -18,41 +18,48 @@ export default function PostsPage() {
               href={`/posts/${post.slug}`}
               key={post.slug}
               className="
-                block rounded-2xl border border-sky-100 bg-white/60 backdrop-blur-sm
-                p-6 shadow-sm transition-all duration-300
-                hover:shadow-lg hover:scale-[1.01]
-                relative overflow-hidden group
-              "
+      block rounded-2xl border border-sky-100 bg-white/60 backdrop-blur-sm
+      p-6 shadow-sm transition-all duration-300
+      hover:shadow-lg hover:scale-[1.01]
+      relative overflow-hidden group
+    "
             >
               {/* 波アニメーションの背景 */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none wave-bg"></div>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none wave-bg" />
 
-              {/* 内容 */}
-              <div className="relative z-10">
-                <span className="text-xs text-gray-500">{post.date}</span>
+              {/* 内容本体 */}
+              <div className="relative z-10 flex gap-4">
+                {/* テキスト部分 */}
+                <div className="flex-1">
+                  {/* 日付 */}
+                  <span className="text-xs text-gray-500">{post.date}</span>
 
-                <h2 className="text-2xl font-semibold mt-2 mb-2">
-                  {post.title}
-                </h2>
+                  {/* タイトル */}
+                  <h2 className="text-xl font-semibold mt-1 mb-2 text-gray-900">
+                    {post.title}
+                  </h2>
 
-                {post.summary && (
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {post.summary}
-                  </p>
-                )}
+                  {/* サマリ */}
+                  {post.summary && (
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                      {post.summary}
+                    </p>
+                  )}
 
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag: string) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                  {/* タグ */}
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </Link>
           ))}
