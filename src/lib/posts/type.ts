@@ -1,12 +1,27 @@
-// src/lib/posts/types.ts
+// src/lib/posts/type.ts
+
+/**
+ * Post metadata without content
+ * Used for listing posts on index pages
+ */
 export type PostMeta = {
-  slug: string; // URL に使う slug（例: "hello-world"）
+  /** URL slug (e.g., "hello-world") */
+  slug: string;
+  /** Post title */
   title: string;
-  date: string; // ISO形式の文字列
+  /** Publication date in ISO format (YYYY-MM-DD) */
+  date: string;
+  /** Short summary/description */
   summary?: string;
+  /** Array of tag names */
   tags?: string[];
 };
 
+/**
+ * Full post data including content
+ * Used for rendering individual post pages
+ */
 export type Post = PostMeta & {
-  content: string; // MDX 本文（ひとまず文字列のまま）
+  /** Raw MDX content */
+  content: string;
 };

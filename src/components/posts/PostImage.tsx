@@ -5,6 +5,10 @@ type PostImageProps = {
   caption?: string;
 };
 
+/**
+ * PostImage component for displaying images in blog posts
+ * Can be used in MDX content
+ */
 export function PostImage({ src, alt, caption }: PostImageProps) {
   return (
     <figure className="my-6">

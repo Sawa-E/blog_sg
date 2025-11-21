@@ -1,3 +1,4 @@
+// src/components/posts/CodeBlock.tsx
 "use client";
 
 import type { ReactNode, HTMLAttributes } from "react";
@@ -7,6 +8,10 @@ type CodeBlockProps = HTMLAttributes<HTMLPreElement> & {
   children?: ReactNode;
 };
 
+/**
+ * CodeBlock component with copy functionality
+ * Used as a replacement for <pre> tags in MDX content
+ */
 export default function CodeBlock({
   children,
   className,
@@ -42,6 +47,7 @@ export default function CodeBlock({
           transition
           hover:bg-gray-700
         "
+        aria-label={copied ? "Copied to clipboard" : "Copy code to clipboard"}
       >
         {copied ? (
           <>

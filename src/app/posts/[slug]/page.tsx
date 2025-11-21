@@ -3,9 +3,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllPostsMeta, getPostBySlug } from "@/lib/posts/getAllPosts";
-import { PostContent } from "@/components/posts/PostContent";
 import { Toc } from "@/components/posts/Toc";
-import { parseMdx } from "@/lib/posts/parseMdx";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { mdxComponents } from "@/components/posts/mdxComponents";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+import rehypeMdxImportMedia from "rehype-mdx-import-media";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -23,9 +26,6 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  // ここで MDX にコンパイル（サーバー側）
-  const mdxSource = await parseMdx(post.content);
-
   return (
     <main className="min-h-screen body-sea text-gray-900">
       <div className="max-w-5xl mx-auto px-4 py-8">
@@ -36,8 +36,21 @@ export default async function PostPage({ params }: Props) {
             <div className="text-xs text-gray-500 mb-2">{post.date}</div>
             <h1 className="text-3xl font-bold mb-6">{post.title}</h1>
 
-            {/* MDXRemote 用の source を渡す */}
-            <PostContent source={mdxSource} />
+            {/* MDX content using RSC API */}
+            <div className="prose-post-wrapper">
+              <div className="prose-post">
+                <MDXRemote
+                  source={post.content}
+                  components={mdxComponents}
+                  options={{
+                    mdxOptions: {
+                      remarkPlugins: [remarkGfm],
+                      rehypePlugins: [rehypeHighlight, rehypeMdxImportMedia],
+                    },
+                  }}
+                />
+              </div>
+            </div>
           </article>
 
           {/* 右：目次 */}

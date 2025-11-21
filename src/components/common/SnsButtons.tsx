@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const SnsButtons = () => {
   return (
     <div className="flex gap-3 mt-4">
