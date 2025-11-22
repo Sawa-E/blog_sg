@@ -1,3 +1,4 @@
+// src/components/posts/Toc.tsx（改善版）
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,29 +9,31 @@ type TocItem = {
   level: number;
 };
 
-/**
- * Table of Contents component
- * Automatically generates a TOC from h2 and h3 headings in the page
- */
 export function Toc() {
   const [items, setItems] = useState<TocItem[]>([]);
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
-    // Use setTimeout to defer the state update
     const timeoutId = setTimeout(() => {
-      // Extract headings from the DOM
+      // 📌 本文のみを対象にする（article#article-content内のみ）
+      const articleContent = document.querySelector("#article-content");
+      if (!articleContent) return;
+
       const headings = Array.from(
-        document.querySelectorAll("h2, h3")
+        articleContent.querySelectorAll("h2, h3")
       ) as HTMLHeadingElement[];
 
       const seen = new Set<string>();
       const newItems: TocItem[] = [];
 
       headings.forEach((h) => {
-        const baseId = h.innerText.replace(/\s+/g, "-");
+        // 絵文字を除去してIDを生成
+        const textWithoutEmoji = h.innerText
+          .replace(/[\u{1F300}-\u{1F9FF}]/gu, "")
+          .trim();
+        const baseId = textWithoutEmoji.replace(/\s+/g, "-").toLowerCase();
         let id = baseId;
 
-        // Prevent duplicates: add a counter if needed
         let counter = 1;
         while (seen.has(id)) {
           counter++;
@@ -38,12 +41,11 @@ export function Toc() {
         }
         seen.add(id);
 
-        // Set the ID on the actual DOM element (for anchor links)
         h.id = id;
 
         newItems.push({
           id,
-          text: h.innerText,
+          text: textWithoutEmoji,
           level: h.tagName === "H2" ? 2 : 3,
         });
       });
@@ -54,6 +56,29 @@ export function Toc() {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  // アクティブな見出しの追跡
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-80px 0px -80% 0px",
+      }
+    );
+
+    items.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [items]);
+
   if (items.length === 0) return null;
 
   return (
@@ -61,32 +86,53 @@ export function Toc() {
       className="
         hidden xl:block
         w-64
-        ml-4
         self-start
         sticky
         top-24
-        max-h-[80vh]
+        max-h-[calc(100vh-120px)]
         overflow-auto
         text-sm
-        text-gray-700
       "
-      aria-label="Table of contents"
+      aria-label="目次"
     >
-      <p className="font-semibold mb-2">目次</p>
-      <ul className="space-y-1 border-l pl-3">
-        {items.map((item) => (
-          <li key={item.id}>
-            <a
-              href={`#${item.id}`}
-              className={`block hover:text-blue-600 ${
-                item.level === 3 ? "ml-3 text-[13px]" : ""
-              }`}
-            >
-              {item.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div className="rounded-xl border border-sky-100 bg-white/60 backdrop-blur-sm p-4 shadow-sm">
+        <p className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <svg
+            className="w-4 h-4 text-sky-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+          目次
+        </p>
+        <ul className="space-y-1">
+          {items.map((item) => (
+            <li key={item.id}>
+              <a
+                href={`#${item.id}`}
+                className={`
+                  block py-1.5 px-3 rounded-lg text-sm transition-all duration-200
+                  ${item.level === 3 ? "ml-4 text-xs" : ""}
+                  ${
+                    activeId === item.id
+                      ? "bg-sky-100 text-sky-700 font-semibold"
+                      : "text-gray-600 hover:bg-sky-50 hover:text-sky-600"
+                  }
+                `}
+              >
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 }

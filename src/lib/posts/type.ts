@@ -15,6 +15,8 @@ export type PostMeta = {
   summary?: string;
   /** Array of tag names */
   tags?: string[];
+  thumbnail?: string; // 🆕 サムネイル画像のパス
+  readingTime?: number; // 🆕 読了時間（分）
 };
 
 /**
