@@ -2,6 +2,20 @@
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
 import { ProfileCard } from "@/components/home/ProfileCard";
+import { baseMetadata } from "@/lib/seo";
+
+export const metadata = {
+  ...baseMetadata,
+  title: "そーがの日記",
+  openGraph: {
+    ...baseMetadata.openGraph,
+    title: "そーがの日記",
+  },
+  twitter: {
+    ...baseMetadata.twitter,
+    title: "そーがの日記",
+  },
+};
 
 export default function HomePage() {
   const posts = getAllPostsMeta()

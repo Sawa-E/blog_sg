@@ -1,12 +1,5 @@
-// src/app/about/page.tsx（新規作成）
-import type { Metadata } from "next";
+// src/app/about/page.tsx
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "このブログについて | そーがの日記",
-  description:
-    "そーがの自己紹介ページ。制御工学を学ぶ理系大学生が、技術メモや日常を綴るブログです。",
-};
 
 export default function AboutPage() {
   return (
