@@ -1,3 +1,4 @@
+// tailwind.config.ts（改善版）
 import type { Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
 import lineClamp from "@tailwindcss/line-clamp";
@@ -9,7 +10,11 @@ const config: Config = {
     "./content/**/*.{md,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "475px", // 追加: xsブレークポイント
+      },
+    },
   },
   plugins: [typography, lineClamp],
 };
