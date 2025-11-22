@@ -49,7 +49,7 @@ export function Footer() {
             <h3 className="font-bold text-gray-900 mb-3">SNS</h3>
             <div className="flex gap-3">
               <a
-                href="https://x.com/..."
+                href="https://x.com/swa2_ga"
                 target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 rounded-full bg-sky-100 hover:bg-sky-200 flex items-center justify-center transition-colors"
