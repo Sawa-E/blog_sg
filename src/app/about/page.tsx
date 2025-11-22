@@ -115,7 +115,7 @@ export default function AboutPage() {
               {
                 title: "暇だったから",
                 description:
-                  "正直に言うと、時間があったので何か始めてみようと思ったのがきっかけです（笑）",
+                  "正直に言うと、時間があったので何か始めてみようと思ったのがきっかけですw",
                 icon: "😊",
                 gradient: "from-cyan-400 to-teal-400",
               },
@@ -239,7 +239,7 @@ export default function AboutPage() {
                   url: "https://github.com/Sawa-E",
                   icon: "/icons/github-mark.svg",
                   color: "from-gray-800 to-black",
-                  description: "コード置き場",
+                  description: "コード保管庫",
                 },
                 {
                   name: "Instagram",
@@ -247,7 +247,7 @@ export default function AboutPage() {
                   url: "https://instagram.com/sawa_sgsg",
                   icon: "/icons/instagram-logo.svg",
                   color: "from-pink-500 to-purple-600",
-                  description: "写真アルバム",
+                  description: "写真メイン",
                 },
               ].map((social) => (
                 <a
@@ -318,9 +318,7 @@ export default function AboutPage() {
                   <h3 className="font-semibold text-gray-900 mb-1">
                     デプロイ先
                   </h3>
-                  <p className="text-sm text-gray-600">
-                    Cloudflare Pages（静的サイト）
-                  </p>
+                  <p className="text-sm text-gray-600">Cloudflare Pages</p>
                 </div>
               </div>
             </div>

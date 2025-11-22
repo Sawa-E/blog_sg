@@ -290,3 +290,18 @@ nav[aria-label="目次"]::-webkit-scrollbar-thumb {
 nav[aria-label="目次"]::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Spotify公式カラー */
+:root {
+  --spotify-green: #1db954;
+  --spotify-light: #1ed760;
+  --spotify-dark: #191414;
+  --spotify-gray: #535353;
+}
+
+@theme inline {
+  --color-spotify-green: var(--spotify-green);
+  --color-spotify-light: var(--spotify-light);
+  --color-spotify-dark: var(--spotify-dark);
+  --color-spotify-gray: var(--spotify-gray);
+}

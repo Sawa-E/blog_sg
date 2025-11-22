@@ -1,4 +1,4 @@
-// tailwind.config.ts（改善版）
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
 import lineClamp from "@tailwindcss/line-clamp";
@@ -12,7 +12,13 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        xs: "475px", // 追加: xsブレークポイント
+        xs: "475px",
+      },
+      colors: {
+        "spotify-green": "#1DB954",
+        "spotify-light": "#1ed760",
+        "spotify-dark": "#191414",
+        "spotify-gray": "#535353",
       },
     },
   },
