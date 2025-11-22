@@ -1,5 +1,13 @@
 // src/app/about/page.tsx
 import Link from "next/link";
+import { generatePageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "このブログについて",
+  description: "そーがの自己紹介ページ",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

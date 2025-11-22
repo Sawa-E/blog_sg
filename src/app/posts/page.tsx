@@ -1,5 +1,14 @@
+// src/app/posts/page.tsx
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
+import { generatePageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "記事一覧",
+  description: "そーがの日記の全記事一覧",
+  path: "/posts",
+});
 
 export default function PostsPage() {
   const posts = getAllPostsMeta().sort(
@@ -7,7 +16,6 @@ export default function PostsPage() {
   );
 
   return (
-    // 背景は layout.tsx の body-sea を活かす
     <main className="min-h-screen text-gray-900">
       <div className="max-w-4xl mx-auto px-4 py-10">
         <h1 className="text-3xl font-bold mb-8">記事一覧</h1>
@@ -18,11 +26,11 @@ export default function PostsPage() {
               href={`/posts/${post.slug}`}
               key={post.slug}
               className="
-      block rounded-2xl border border-sky-100 bg-white/60 backdrop-blur-sm
-      p-6 shadow-sm transition-all duration-300
-      hover:shadow-lg hover:scale-[1.01]
-      relative overflow-hidden group
-    "
+                block rounded-2xl border border-sky-100 bg-white/60 backdrop-blur-sm
+                p-6 shadow-sm transition-all duration-300
+                hover:shadow-lg hover:scale-[1.01]
+                relative overflow-hidden group
+              "
             >
               {/* 波アニメーションの背景 */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none wave-bg" />

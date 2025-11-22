@@ -1,4 +1,4 @@
-// src/app/posts/[slug]/page.tsx（修正版）
+// src/app/posts/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllPostsMeta, getPostBySlug } from "@/lib/posts/getAllPosts";
@@ -9,6 +9,7 @@ import { RelatedPosts } from "@/components/posts/RelatedPosts";
 import { ShareButtons } from "@/components/posts/ShareButtons";
 import { ReadingProgress } from "@/components/posts/ReadingProgress";
 import { ScrollToTop } from "@/components/posts/ScrollToTop";
+import { generatePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -29,10 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  return {
-    title: `${post.title} | そーがの日記`,
+  // 🆕 generatePageMetadata を使用
+  return generatePageMetadata({
+    title: post.title,
     description: post.summary ?? "そーがの日記のブログ記事",
-  };
+    path: `/posts/${slug}`,
+    type: "article",
+  });
 }
 
 export function generateStaticParams() {
@@ -49,7 +53,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <>
-      {/* プログレスバー（Client Component） */}
+      {/* プログレスバー */}
       <ReadingProgress />
 
       <main className="min-h-screen body-sea text-gray-900">
@@ -139,7 +143,7 @@ export default async function PostPage({ params }: Props) {
               </div>
             </article>
 
-            {/* 目次（本文のみ） */}
+            {/* 目次 */}
             <Toc />
           </div>
 
