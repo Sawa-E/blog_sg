@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 export const metadata: Metadata = {
   title: "そーがの日記",
   description: "Soga's blog",
+  metadataBase: new URL("https://blog-sg.pages.dev"),
   openGraph: {
     title: "そーがの日記",
     description: "Soga's blog",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "そーがの日記",
     description: "Soga's blog",
-    images: ["/og-image.png"], // ここは string or string[]
+    images: ["/og-image.png"],
   },
 };
 
