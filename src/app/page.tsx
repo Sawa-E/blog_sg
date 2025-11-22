@@ -6,7 +6,7 @@ import { ProfileCard } from "@/components/home/ProfileCard";
 export default function HomePage() {
   const posts = getAllPostsMeta()
     .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))
-    .slice(0, 4); // 3件→4件に増やして2列レイアウト
+    .slice(0, 4);
 
   return (
     <main className="min-h-screen">
@@ -21,9 +21,7 @@ export default function HomePage() {
             そーがの日記
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">
-            海のそよ風のように、ゆるく心地よく。
-            <br />
-            技術メモ、研究ノート、日々の気づきを綴る場所。
+            ただの日常
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
