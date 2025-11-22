@@ -81,10 +81,12 @@ body {
    ブログ記事用カスタム Typography
    =================================== */
 
+/* 記事本文の最適化（更新済み） */
 .prose-post {
   @apply prose prose-neutral max-w-none;
-  line-height: 1.65;
-  font-size: 16.5px;
+  line-height: 1.75; /* 1.65 → 1.75 に改善 */
+  font-size: 17px; /* 16.5px → 17px に改善 */
+  letter-spacing: 0.01em; /* 読みやすさ向上 */
 }
 
 /* 見出し */
@@ -108,10 +110,10 @@ body {
   @apply text-xl font-semibold mt-6 mb-2;
 }
 
-/* 段落 */
+/* 段落（余白改善） */
 .prose-post p {
-  line-height: 1.55;
-  @apply text-[16px] mb-4;
+  line-height: 1.8; /* 1.55 → 1.8 に改善 */
+  @apply text-[17px] mb-6; /* mb-4 → mb-6 */
 }
 
 /* 箇条書き */
@@ -126,11 +128,17 @@ body {
   font-family: "JetBrains Mono", monospace;
 }
 
-/* コードブロック（VSCode風ダーク） */
+/* コードブロック（VSCode風ダーク） + コピー用ボタン用ポジション */
 .prose-post pre {
   @apply rounded-xl px-4 py-3 my-5 text-sm;
   background: #03263b;
   border: 1px solid #124d6c;
+  position: relative; /* コピーボタン配置のために追加 */
+}
+
+/* copy ボタンの表示切替（ホバーで出す） */
+.prose-post pre:hover .copy-button {
+  opacity: 1;
 }
 
 /* code 内の文字を少し上品に */
@@ -191,4 +199,94 @@ body {
 .sns-btn-sea:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+}
+
+/* --- コードブロックのコピーボタンスタイル --- */
+.copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #334155;
+}
+
+.copy-button:hover {
+  background: white;
+}
+
+/* プログレスバーのアニメーション */
+#reading-progress {
+  transition: width 150ms ease-out;
+}
+
+/* スクロールスムージング */
+html {
+  scroll-behavior: smooth;
+}
+
+/* セクション間の余白統一 */
+main > section + section {
+  @apply mt-16;
+}
+
+/* カード系のホバーエフェクト統一 */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+/* フェードインアニメーション */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-in;
+}
+
+/* スムーズスクロール */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* ヘッダーの高さ分 */
+}
+
+/* Tailwind xs ブレークポイント追加 */
+@media (min-width: 475px) {
+  .xs\:inline {
+    display: inline;
+  }
+  .xs\:hidden {
+    display: none;
+  }
+}
+
+/* 目次のスクロールバースタイル */
+nav[aria-label="目次"]::-webkit-scrollbar {
+  width: 4px;
+}
+
+nav[aria-label="目次"]::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+nav[aria-label="目次"]::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+nav[aria-label="目次"]::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
