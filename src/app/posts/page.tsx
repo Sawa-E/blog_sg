@@ -1,6 +1,7 @@
-// src/app/posts/page.tsx
+// src/app/posts/page.tsx（修正版）
 import Link from "next/link";
 import { getAllPostsMeta } from "@/lib/posts/getAllPosts";
+import { TagSearch } from "@/components/posts/TagSearch";
 import { generatePageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 
@@ -15,11 +16,33 @@ export default function PostsPage() {
     (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
   );
 
+  // タグの集計
+  const tagCounts = new Map<string, number>();
+  posts.forEach((post) => {
+    post.tags?.forEach((tag) => {
+      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+    });
+  });
+
+  const allTags = Array.from(tagCounts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+
   return (
     <main className="min-h-screen text-gray-900">
       <div className="max-w-4xl mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold mb-8">記事一覧</h1>
+        {/* ヘッダー */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-4">記事一覧</h1>
+          <p className="text-gray-600 mb-6">
+            全 {posts.length} 件の記事があります
+          </p>
 
+          {/* 🆕 タグ検索 */}
+          <TagSearch allTags={allTags} />
+        </div>
+
+        {/* 記事リスト */}
         <div className="grid gap-6">
           {posts.map((post) => (
             <Link

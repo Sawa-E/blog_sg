@@ -12,6 +12,7 @@ export type PostMeta = {
   tags?: string[];
   thumbnail?: string;
   readingTime?: number;
+  content?: string;
 };
 
 export type Post = PostMeta & {

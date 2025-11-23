@@ -305,3 +305,58 @@ nav[aria-label="目次"]::-webkit-scrollbar-thumb:hover {
   --color-spotify-dark: var(--spotify-dark);
   --color-spotify-gray: var(--spotify-gray);
 }
+
+/* src/app/globals.css（追加部分） */
+
+/* Callout内のリスト */
+.prose-callout ul,
+.prose-callout ol {
+  @apply my-2 pl-5;
+}
+
+.prose-callout li {
+  @apply my-1;
+}
+
+/* Summary内のリスト */
+.prose-summary ul,
+.prose-summary ol {
+  @apply my-3 pl-5;
+}
+
+.prose-summary li {
+  @apply my-2;
+}
+
+/* フェードインアニメーション */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+/* src/app/globals.css（追加部分） */
+
+/* スライドアップアニメーション */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}

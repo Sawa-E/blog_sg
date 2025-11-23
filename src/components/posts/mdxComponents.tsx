@@ -1,20 +1,23 @@
-// src/components/posts/mdxComponents.tsx
-import { Callout } from "@/components/posts/Callout";
-import { PostImage } from "@/components/posts/PostImage";
-import { SummaryBox } from "@/components/posts/SummaryBox";
-import CodeBlock from "@/components/posts/CodeBlock";
-import type { MDXComponents } from "mdx/types";
+import { Callout } from "./Callout";
+import { SummaryBox } from "./SummaryBox";
+import { PostImage } from "./PostImage";
 import { SpotifyEmbed } from "./SpotifyEmbed";
+import { FeatureList } from "./FeatureList";
+import { StepGuide } from "./StepGuide";
+import { ComparisonTable } from "./ComparisonTable";
+import { Tabs } from "./Tabs";
+import { Accordion } from "./Accordion";
+import { Alert } from "./Alert";
 
-/**
- * MDX components mapping
- * Maps custom components and HTML elements for MDX rendering
- */
-export const mdxComponents: MDXComponents = {
+export const mdxComponents = {
   Callout,
-  PostImage,
   SummaryBox,
+  PostImage,
   SpotifyEmbed,
-  // Replace <pre> tags with CodeBlock component for copy functionality
-  pre: CodeBlock,
+  FeatureList,
+  StepGuide,
+  ComparisonTable,
+  Tabs,
+  Accordion,
+  Alert,
 };

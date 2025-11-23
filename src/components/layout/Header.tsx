@@ -1,13 +1,20 @@
-// src/components/layout/Header.tsx（改善版）
+// src/components/layout/Header.tsx（修正版）
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { GlobalSearch } from "@/components/search/GlobalSearch";
+import type { PostMeta } from "@/lib/posts/type";
 
-export function Header() {
+type HeaderProps = {
+  allPosts: PostMeta[]; // ✅ propsで受け取る
+};
+
+export function Header({ allPosts }: HeaderProps) {
   const [shrink, setShrink] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -19,108 +26,67 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Ctrl+K または Cmd+K でグローバル検索を開く
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const isActive = (path: string) => pathname === path;
 
   const navLinks = [
     { href: "/", label: "ホーム", icon: "🏠" },
     { href: "/posts", label: "記事", icon: "📚" },
+    { href: "/tags", label: "タグ", icon: "🏷️" },
     { href: "/about", label: "About", icon: "👤" },
   ];
 
   return (
-    <header
-      className={`
-        sticky top-0 z-40
-        border-b border-sky-100/70
-        bg-white/90 backdrop-blur-lg
-        transition-all duration-300
-        ${shrink ? "py-2 shadow-md" : "py-3 sm:py-4 shadow-sm"}
-      `}
-    >
-      <div className="mx-auto flex max-w-6xl px-4 items-center justify-between">
-        {/* ロゴ */}
-        <Link
-          href="/"
-          className={`
-            font-extrabold tracking-tight transition-all duration-300
-            bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent
-            hover:from-sky-700 hover:to-cyan-700
-            flex items-center gap-2
-            ${shrink ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}
-          `}
-        >
-          <span className="text-2xl" aria-hidden="true">
-            🌊
-          </span>
-          <span className="hidden xs:inline">そーがの日記</span>
-          <span className="xs:hidden">そーがの日記</span>
-        </Link>
-
-        {/* デスクトップナビゲーション */}
-        <nav className="hidden sm:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`
-                px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200
-                flex items-center gap-1.5
-                ${
-                  isActive(link.href)
-                    ? "bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 shadow-sm"
-                    : "text-gray-600 hover:bg-sky-50 hover:text-sky-600"
-                }
-              `}
-            >
-              <span className="text-base">{link.icon}</span>
-              <span>{link.label}</span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* モバイルメニューボタン */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="sm:hidden p-2 rounded-lg hover:bg-sky-50 transition-colors"
-          aria-label="メニューを開く"
-        >
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <>
+      <header
+        className={`
+          sticky top-0 z-40
+          border-b border-sky-100/70
+          bg-white/90 backdrop-blur-lg
+          transition-all duration-300
+          ${shrink ? "py-2 shadow-md" : "py-3 sm:py-4 shadow-sm"}
+        `}
+      >
+        <div className="mx-auto flex max-w-6xl px-4 items-center justify-between">
+          {/* ロゴ */}
+          <Link
+            href="/"
+            className={`
+              font-extrabold tracking-tight transition-all duration-300
+              bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent
+              hover:from-sky-700 hover:to-cyan-700
+              flex items-center gap-2
+              ${shrink ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}
+            `}
           >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
-      </div>
+            <span className="text-2xl" aria-hidden="true">
+              🌊
+            </span>
+            <span className="hidden xs:inline">そーがの日記</span>
+            <span className="xs:hidden">そーがの日記</span>
+          </Link>
 
-      {/* モバイルメニュー */}
-      {mobileMenuOpen && (
-        <nav className="sm:hidden border-t border-sky-100 bg-white/95 backdrop-blur-lg">
-          <div className="px-4 py-3 space-y-1">
+          {/* デスクトップナビゲーション */}
+          <nav className="hidden sm:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
                 className={`
-                  block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200
-                  flex items-center gap-3
+                  px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200
+                  flex items-center gap-1.5
                   ${
                     isActive(link.href)
                       ? "bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 shadow-sm"
@@ -128,13 +94,125 @@ export function Header() {
                   }
                 `}
               >
-                <span className="text-xl">{link.icon}</span>
+                <span className="text-base">{link.icon}</span>
                 <span>{link.label}</span>
               </Link>
             ))}
+
+            {/* 検索ボタン */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="ml-2 px-3 py-1.5 rounded-full text-sm font-medium text-gray-600 hover:bg-sky-50 hover:text-sky-600 transition-all duration-200 flex items-center gap-1.5"
+              title="検索 (Ctrl+K)"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span className="text-xs text-gray-400 hidden lg:inline">
+                Search
+              </span>
+            </button>
+          </nav>
+
+          {/* モバイルメニューボタン */}
+          <div className="flex items-center gap-2 sm:hidden">
+            {/* モバイル検索ボタン */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 rounded-lg hover:bg-sky-50 transition-colors"
+              aria-label="検索"
+            >
+              <svg
+                className="w-5 h-5 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+
+            {/* ハンバーガーメニュー */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg hover:bg-sky-50 transition-colors"
+              aria-label="メニューを開く"
+            >
+              <svg
+                className="w-6 h-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
           </div>
-        </nav>
-      )}
-    </header>
+        </div>
+
+        {/* モバイルメニュー */}
+        {mobileMenuOpen && (
+          <nav className="sm:hidden border-t border-sky-100 bg-white/95 backdrop-blur-lg">
+            <div className="px-4 py-3 space-y-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`
+                    block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200
+                    flex items-center gap-3
+                    ${
+                      isActive(link.href)
+                        ? "bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 shadow-sm"
+                        : "text-gray-600 hover:bg-sky-50 hover:text-sky-600"
+                    }
+                  `}
+                >
+                  <span className="text-xl">{link.icon}</span>
+                  <span>{link.label}</span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
+      </header>
+
+      {/* グローバル検索モーダル */}
+      <GlobalSearch
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        allPosts={allPosts}
+      />
+    </>
   );
 }

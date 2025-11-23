@@ -9,7 +9,7 @@ const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 /**
  * Extract slug from filename
  * Expected format: YYYY-MM-DD-slug.mdx
- * 
+ *
  * @param filename - The filename to extract slug from
  * @returns The extracted slug
  */
@@ -22,14 +22,19 @@ function extractSlug(filename: string): string {
 
 /**
  * Get post metadata from a single file
- * 
+ *
  * @param filePath - Full path to the post file
  * @param filename - Filename of the post
+ * @param includeContent - Whether to include the MDX content (for search)
  * @returns Post metadata
  */
-function getPostMetaFromFile(filePath: string, filename: string): PostMeta {
+function getPostMetaFromFile(
+  filePath: string,
+  filename: string,
+  includeContent = false // ← 新しいパラメータ
+): PostMeta {
   const fileContents = fs.readFileSync(filePath, "utf-8");
-  const { data } = matter(fileContents);
+  const { data, content } = matter(fileContents); // ← contentも取得
 
   const slug = extractSlug(filename);
 
@@ -44,16 +49,19 @@ function getPostMetaFromFile(filePath: string, filename: string): PostMeta {
     date,
     summary,
     tags,
+    ...(includeContent && { content }), // ← contentを条件付きで追加
   };
 }
 
 /**
- * Get all posts metadata (without content)
+ * Get all posts metadata (with optional content for search)
  * Posts are sorted by date in descending order
- * 
+ *
+ * @param includeContent - Whether to include MDX content (default: true for search)
  * @returns Array of post metadata
  */
-export function getAllPostsMeta(): PostMeta[] {
+export function getAllPostsMeta(includeContent = true): PostMeta[] {
+  // ← デフォルトtrue
   if (!fs.existsSync(POSTS_DIR)) {
     return [];
   }
@@ -64,7 +72,7 @@ export function getAllPostsMeta(): PostMeta[] {
 
   const posts = files.map((filename) => {
     const fullPath = path.join(POSTS_DIR, filename);
-    return getPostMetaFromFile(fullPath, filename);
+    return getPostMetaFromFile(fullPath, filename, includeContent); // ← 引数を渡す
   });
 
   // Sort by date in descending order
@@ -73,7 +81,7 @@ export function getAllPostsMeta(): PostMeta[] {
 
 /**
  * Get a single post by slug (including content)
- * 
+ *
  * @param slug - The post slug to retrieve
  * @returns Full post data with content, or null if not found
  */
