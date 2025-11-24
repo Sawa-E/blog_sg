@@ -25,7 +25,7 @@ export function SummaryBox({ title = "まとめ", children }: SummaryBoxProps) {
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-400 to-cyan-500 flex items-center justify-center shadow-md">
               <span className="text-2xl">📘</span>
             </div>
-            <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+            <h2 className="text-xl font-bold text-gray-900">{title}</h2>
           </div>
 
           {/* コンテンツ */}
