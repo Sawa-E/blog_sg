@@ -60,80 +60,142 @@ MDX ファイルの先頭に以下のメタデータを記述：
 
 ```yaml
 ---
-title: "記事のタイトル"
-date: "2025-11-20"
-summary: "記事の要約"
-tags: ["タグ1", "タグ2"]
+title: "記事のタイトル"        # 必須：記事のタイトル
+date: "2025-11-20"            # 必須：記事の公開日（YYYY-MM-DD形式）
+summary: "記事の要約"          # 推奨：記事一覧で表示される要約文
+tags: ["タグ1", "タグ2"]      # オプション：タグのリスト
 ---
 ```
 
-### MDX の記述例
+### 基本的な Markdown 記法
+
+MDX では通常の Markdown 記法が使用できます：
+
+```markdown
+# 見出し1
+## 見出し2
+### 見出し3
+
+**太字**
+*斜体*
+~~取り消し線~~
+
+- リスト項目1
+- リスト項目2
+  - ネストしたリスト
+
+1. 番号付きリスト
+2. 項目2
+
+[リンクテキスト](https://example.com)
+
+> 引用文
+
+`インラインコード`
+```
+
+### コードブロック
+
+コードブロックはシンタックスハイライトとコピー機能が自動で適用されます：
+
+````markdown
+```typescript
+const greeting = (name: string): string => {
+  return `Hello, ${name}!`;
+};
+```
+
+```javascript
+console.log("Hello, World!");
+```
+
+```python
+def hello(name):
+    return f"Hello, {name}!"
+```
+````
+
+### 数式の記述
+
+KaTeX を使った数式のレンダリングに対応しています：
+
+```markdown
+インライン数式: $E = mc^2$
+
+ブロック数式:
+$$
+\frac{d^2 v(t)}{dt^2} + \frac{dv(t)}{dt} + v(t) = 10
+$$
+```
+
+## カスタムコンポーネント一覧
+
+このブログでは、MDX 内で使える便利なカスタムコンポーネントを多数用意しています。
+
+### 📢 Callout
+
+重要な情報を目立たせるためのボックス。タイプに応じて色とアイコンが変わります。
+
+**Props:**
+- `type`: `"info"` | `"warning"` | `"tip"` | `"note"` | `"success"` | `"danger"` (デフォルト: `"info"`)
+- `title`: タイトル (オプション)
+- `children`: 表示する内容
+
+**使用例:**
 
 ```mdx
----
-title: "初めての記事"
-date: "2025-11-20"
-summary: "ブログを始めました"
-tags: ["blog", "typescript"]
----
-
-## 見出し
-
-本文をここに書きます。
-
-### カスタムコンポーネントの使用
-
 <Callout type="info" title="お知らせ">
   重要な情報を目立たせることができます。
 </Callout>
 
-<SummaryBox title="まとめ">
-  記事の要点をまとめます。
-</SummaryBox>
+<Callout type="warning" title="注意">
+  ここは気をつけてください。
+</Callout>
 
-<PostImage 
-  src="/images/example.png" 
-  alt="説明文"
-  caption="画像のキャプション"
-/>
+<Callout type="tip">
+  タイトルなしでも使えます！
+</Callout>
 
-### コードブロック
-
-\`\`\`typescript
-const greeting = (name: string): string => {
-  return `Hello, ${name}!`;
-};
-\`\`\`
-```
-
-## 利用可能なカスタムコンポーネント
-
-### Callout
-
-情報を目立たせるためのボックス
-
-```mdx
-<Callout type="info" title="タイトル">
-  内容
+<Callout type="success" title="成功">
+  操作が正常に完了しました。
 </Callout>
 ```
 
-- **type**: `info` | `warning` | `tip` | `note`
-- **title**: オプション
+### 📘 SummaryBox
 
-### SummaryBox
+記事の要点やまとめを見やすく表示するボックス。
 
-記事のまとめを表示
+**Props:**
+- `title`: タイトル (デフォルト: `"まとめ"`)
+- `children`: まとめの内容
+
+**使用例:**
 
 ```mdx
-<SummaryBox title="まとめ">
-  内容
+<SummaryBox title="今日のまとめ">
+  自作ブログで日記を書き始めました。MDX の書き方を学びつつ、研究も頑張ります！
+</SummaryBox>
+
+<SummaryBox>
+  - ポイント1
+  - ポイント2
+  - ポイント3
 </SummaryBox>
 ```
 
-### PostImage
+### 🖼️ PostImage
 
-画像を表示（キャプション付き）
+画像を表示するコンポーネント。キャプション付きで表示できます。
+
+**Props:**
+- `src`: 画像のパス (必須)
+- `alt`: 代替テキスト (必須)
+- `caption`: 画像の説明文 (オプション)
+- `width`: 幅 (デフォルト: `"100%"`)
+- `height`: 高さ (デフォルト: `"auto"`)
+- `maxWidth`: 最大幅 (オプション)
+
+**使用例:**
 
 ```mdx
 <PostImage 
@@ -141,6 +203,310 @@ const greeting = (name: string): string => {
   alt="説明文"
   caption="画像のキャプション"
 />
+
+<PostImage 
+  src="/images/small.png" 
+  alt="小さい画像"
+  width="300px"
+  caption="サイズ指定した画像"
+/>
+```
+
+### ✨ FeatureList
+
+機能や特徴を一覧表示するコンポーネント。3つの表示スタイルが選べます。
+
+**Props:**
+- `items`: 表示する項目の配列 (必須)
+  - `icon`: アイコン (オプション)
+  - `title`: タイトル (オプション)
+  - `description`: 説明文 (必須)
+- `variant`: `"default"` | `"compact"` | `"cards"` (デフォルト: `"default"`)
+
+**使用例:**
+
+```mdx
+{/* カード型表示 */}
+<FeatureList
+  variant="cards"
+  items={[
+    {
+      icon: "🚀",
+      title: "高速",
+      description: "Next.js 16の最適化により爆速！",
+    },
+    {
+      icon: "🎨",
+      title: "美しい",
+      description: "海をテーマにした洗練されたデザイン",
+    },
+  ]}
+/>
+
+{/* コンパクト表示 */}
+<FeatureList
+  variant="compact"
+  items={[
+    { icon: "🔬", description: "今は研究に集中したいです" },
+    { icon: "✨", description: "ブログのUXも向上させたいです" },
+  ]}
+/>
+```
+
+### 📝 StepGuide
+
+手順やステップを視覚的に表示するコンポーネント。
+
+**Props:**
+- `steps`: ステップの配列 (必須)
+  - `title`: ステップのタイトル
+  - `description`: ステップの説明
+- `variant`: `"vertical"` | `"horizontal"` (デフォルト: `"vertical"`)
+
+**使用例:**
+
+```mdx
+<StepGuide
+  steps={[
+    {
+      title: "インストール",
+      description: "npm install を実行してパッケージをインストールします。",
+    },
+    {
+      title: "設定",
+      description: "設定ファイルを編集します。",
+    },
+    {
+      title: "起動",
+      description: "npm run dev でサーバーを起動します。",
+    },
+  ]}
+/>
+```
+
+### 📊 ComparisonTable
+
+2つの選択肢を比較するテーブル。
+
+**Props:**
+- `titleA`: 左側のタイトル (必須)
+- `titleB`: 右側のタイトル (必須)
+- `items`: 比較項目の配列 (必須)
+  - `label`: 項目名
+  - `optionA`: 選択肢Aの内容
+  - `optionB`: 選択肢Bの内容
+
+**使用例:**
+
+```mdx
+<ComparisonTable
+  titleA="Next.js"
+  titleB="Gatsby"
+  items={[
+    { label: "ビルド速度", optionA: "⚡ 高速", optionB: "🐢 普通" },
+    { label: "学習コスト", optionA: "📚 中", optionB: "📚 高" },
+    { label: "人気度", optionA: "🔥 高", optionB: "👍 中" },
+  ]}
+/>
+```
+
+### 🗂️ Tabs
+
+タブで切り替えられるコンテンツを表示（インタラクティブ）。
+
+**Props:**
+- `tabs`: タブの配列 (必須)
+  - `label`: タブのラベル
+  - `content`: タブの内容
+  - `icon`: アイコン (オプション)
+
+**使用例:**
+
+```mdx
+<Tabs
+  tabs={[
+    {
+      label: "JavaScript",
+      icon: "🟨",
+      content: (
+        <pre>
+          <code>console.log("Hello!");</code>
+        </pre>
+      ),
+    },
+    {
+      label: "TypeScript",
+      icon: "🔷",
+      content: (
+        <pre>
+          <code>const msg: string = "Hello!";</code>
+        </pre>
+      ),
+    },
+  ]}
+/>
+```
+
+### ❓ Accordion
+
+よくある質問などをアコーディオン形式で表示（インタラクティブ）。
+
+**Props:**
+- `items`: 質問と回答の配列 (必須)
+  - `question`: 質問
+  - `answer`: 回答
+
+**使用例:**
+
+```mdx
+<Accordion
+  items={[
+    {
+      question: "このブログはどうやって作られていますか？",
+      answer: "Next.js 16 + TypeScript + Tailwind CSS で構築されています。",
+    },
+    {
+      question: "デプロイ先はどこですか？",
+      answer: "Cloudflare Pages に静的サイトとしてデプロイしています。",
+    },
+  ]}
+/>
+```
+
+### 🔔 Alert
+
+通知やメッセージを表示するコンポーネント。
+
+**Props:**
+- `type`: `"info"` | `"success"` | `"warning"` | `"error"` (デフォルト: `"info"`)
+- `title`: タイトル (オプション)
+- `children`: 内容
+
+**使用例:**
+
+```mdx
+<Alert type="info" title="お知らせ">
+  新しい記事を公開しました！
+</Alert>
+
+<Alert type="success">
+  セットアップが正常に完了しました。
+</Alert>
+
+<Alert type="warning" title="警告">
+  この操作は元に戻せません。
+</Alert>
+
+<Alert type="error" title="エラー">
+  ファイルが見つかりません。
+</Alert>
+```
+
+### 🎥 YouTubeEmbed
+
+YouTube 動画を埋め込むコンポーネント。
+
+**Props:**
+- `videoId`: YouTube の動画 ID (必須)
+- `title`: 動画のタイトル (オプション)
+
+**使用例:**
+
+```mdx
+<YouTubeEmbed videoId="dQw4w9WgXcQ" title="YouTube 動画" />
+```
+
+### 🎵 SpotifyEmbed
+
+Spotify の音楽を埋め込むコンポーネント。
+
+**Props:**
+- `url`: Spotify の URL (必須)
+- `type`: `"track"` | `"album"` | `"playlist"` | `"artist"` (デフォルト: `"track"`)
+- `height`: 高さ (オプション)
+
+**使用例:**
+
+```mdx
+<SpotifyEmbed url="https://open.spotify.com/intl-ja/track/2hrEREhRJDK7FItIqvllmr" />
+
+<SpotifyEmbed 
+  url="https://open.spotify.com/album/xxxxx" 
+  type="album"
+  height={380}
+/>
+```
+
+## MDX 記述の完全な例
+
+以下は、複数のコンポーネントを組み合わせた記事の例です：
+
+```mdx
+---
+title: "Next.js 16 で作るモダンブログ"
+date: "2025-11-20"
+summary: "Next.js 16 と MDX を使った個人ブログの作り方"
+tags: ["nextjs", "mdx", "typescript"]
+---
+
+# Next.js 16 で作るモダンブログ
+
+このブログは **Next.js 16** と **MDX** で構築されています。
+
+<Callout type="info" title="このチュートリアルについて">
+  このガイドでは、Next.js 16 を使った個人ブログの作り方を解説します。
+</Callout>
+
+## 主な機能
+
+<FeatureList
+  variant="cards"
+  items={[
+    {
+      icon: "🚀",
+      title: "高速",
+      description: "Next.js 16 の最適化により爆速で動作",
+    },
+    {
+      icon: "🎨",
+      title: "美しいデザイン",
+      description: "Tailwind CSS で洗練された見た目",
+    },
+  ]}
+/>
+
+## セットアップ手順
+
+<StepGuide
+  steps={[
+    {
+      title: "リポジトリをクローン",
+      description: "git clone でリポジトリを取得します",
+    },
+    {
+      title: "依存関係をインストール",
+      description: "npm install を実行します",
+    },
+    {
+      title: "開発サーバー起動",
+      description: "npm run dev でサーバーを起動します",
+    },
+  ]}
+/>
+
+## コード例
+
+```typescript
+const greeting = (name: string): string => {
+  return `Hello, ${name}!`;
+};
+
+console.log(greeting("World"));
+```
+
+<SummaryBox title="まとめ">
+  Next.js 16 と MDX を使えば、簡単にモダンなブログを構築できます！
+</SummaryBox>
 ```
 
 ## ビルド & デプロイ
