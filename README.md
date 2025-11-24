@@ -226,7 +226,7 @@ $$
 **使用例:**
 
 ```mdx
-{/* カード型表示 */}
+<!-- カード型表示 -->
 <FeatureList
   variant="cards"
   items={[
@@ -243,7 +243,7 @@ $$
   ]}
 />
 
-{/* コンパクト表示 */}
+<!-- コンパクト表示 -->
 <FeatureList
   variant="compact"
   items={[
