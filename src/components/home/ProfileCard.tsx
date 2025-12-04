@@ -37,7 +37,7 @@ export function ProfileCard() {
         <div className="flex items-center gap-4">
           {/* X(Twitter) */}
           <a
-            href="https://x.com/..."
+            href="https://x.com/swa2_ga"
             target="_blank"
             rel="noreferrer"
             aria-label="X (Twitter) を開く"

@@ -60,10 +60,10 @@ MDX ファイルの先頭に以下のメタデータを記述：
 
 ```yaml
 ---
-title: "記事のタイトル"        # 必須：記事のタイトル
-date: "2025-11-20"            # 必須：記事の公開日（YYYY-MM-DD形式）
-summary: "記事の要約"          # 推奨：記事一覧で表示される要約文
-tags: ["タグ1", "タグ2"]      # オプション：タグのリスト
+title: "記事のタイトル" # 必須：記事のタイトル
+date: "2025-11-20" # 必須：記事の公開日（YYYY-MM-DD形式）
+summary: "記事の要約" # 推奨：記事一覧で表示される要約文
+tags: ["タグ1", "タグ2"] # オプション：タグのリスト
 ---
 ```
 
@@ -72,20 +72,22 @@ tags: ["タグ1", "タグ2"]      # オプション：タグのリスト
 MDX では通常の Markdown 記法が使用できます：
 
 ```markdown
-# 見出し1
-## 見出し2
-### 見出し3
+# 見出し 1
+
+## 見出し 2
+
+### 見出し 3
 
 **太字**
-*斜体*
+_斜体_
 ~~取り消し線~~
 
-- リスト項目1
-- リスト項目2
+- リスト項目 1
+- リスト項目 2
   - ネストしたリスト
 
 1. 番号付きリスト
-2. 項目2
+2. 項目 2
 
 [リンクテキスト](https://example.com)
 
@@ -123,6 +125,7 @@ KaTeX を使った数式のレンダリングに対応しています：
 インライン数式: $E = mc^2$
 
 ブロック数式:
+
 $$
 \frac{d^2 v(t)}{dt^2} + \frac{dv(t)}{dt} + v(t) = 10
 $$
@@ -137,6 +140,7 @@ $$
 重要な情報を目立たせるためのボックス。タイプに応じて色とアイコンが変わります。
 
 **Props:**
+
 - `type`: `"info"` | `"warning"` | `"tip"` | `"note"` | `"success"` | `"danger"` (デフォルト: `"info"`)
 - `title`: タイトル (オプション)
 - `children`: 表示する内容
@@ -152,9 +156,7 @@ $$
   ここは気をつけてください。
 </Callout>
 
-<Callout type="tip">
-  タイトルなしでも使えます！
-</Callout>
+<Callout type="tip">タイトルなしでも使えます！</Callout>
 
 <Callout type="success" title="成功">
   操作が正常に完了しました。
@@ -166,6 +168,7 @@ $$
 記事の要点やまとめを見やすく表示するボックス。
 
 **Props:**
+
 - `title`: タイトル (デフォルト: `"まとめ"`)
 - `children`: まとめの内容
 
@@ -176,11 +179,7 @@ $$
   自作ブログで日記を書き始めました。MDX の書き方を学びつつ、研究も頑張ります！
 </SummaryBox>
 
-<SummaryBox>
-  - ポイント1
-  - ポイント2
-  - ポイント3
-</SummaryBox>
+<SummaryBox>- ポイント1 - ポイント2 - ポイント3</SummaryBox>
 ```
 
 ### 🖼️ PostImage
@@ -188,6 +187,7 @@ $$
 画像を表示するコンポーネント。キャプション付きで表示できます。
 
 **Props:**
+
 - `src`: 画像のパス (必須)
 - `alt`: 代替テキスト (必須)
 - `caption`: 画像の説明文 (オプション)
@@ -198,14 +198,14 @@ $$
 **使用例:**
 
 ```mdx
-<PostImage 
-  src="/images/example.png" 
+<PostImage
+  src="/images/example.png"
   alt="説明文"
   caption="画像のキャプション"
 />
 
-<PostImage 
-  src="/images/small.png" 
+<PostImage
+  src="/images/small.png"
   alt="小さい画像"
   width="300px"
   caption="サイズ指定した画像"
@@ -214,9 +214,10 @@ $$
 
 ### ✨ FeatureList
 
-機能や特徴を一覧表示するコンポーネント。3つの表示スタイルが選べます。
+機能や特徴を一覧表示するコンポーネント。3 つの表示スタイルが選べます。
 
 **Props:**
+
 - `items`: 表示する項目の配列 (必須)
   - `icon`: アイコン (オプション)
   - `title`: タイトル (オプション)
@@ -227,6 +228,7 @@ $$
 
 ```mdx
 <!-- カード型表示 -->
+
 <FeatureList
   variant="cards"
   items={[
@@ -244,6 +246,7 @@ $$
 />
 
 <!-- コンパクト表示 -->
+
 <FeatureList
   variant="compact"
   items={[
@@ -258,6 +261,7 @@ $$
 手順やステップを視覚的に表示するコンポーネント。
 
 **Props:**
+
 - `steps`: ステップの配列 (必須)
   - `title`: ステップのタイトル
   - `description`: ステップの説明
@@ -286,15 +290,16 @@ $$
 
 ### 📊 ComparisonTable
 
-2つの選択肢を比較するテーブル。
+2 つの選択肢を比較するテーブル。
 
 **Props:**
+
 - `titleA`: 左側のタイトル (必須)
 - `titleB`: 右側のタイトル (必須)
 - `items`: 比較項目の配列 (必須)
   - `label`: 項目名
-  - `optionA`: 選択肢Aの内容
-  - `optionB`: 選択肢Bの内容
+  - `optionA`: 選択肢 A の内容
+  - `optionB`: 選択肢 B の内容
 
 **使用例:**
 
@@ -315,6 +320,7 @@ $$
 タブで切り替えられるコンテンツを表示（インタラクティブ）。
 
 **Props:**
+
 - `tabs`: タブの配列 (必須)
   - `label`: タブのラベル
   - `content`: タブの内容
@@ -352,6 +358,7 @@ $$
 よくある質問などをアコーディオン形式で表示（インタラクティブ）。
 
 **Props:**
+
 - `items`: 質問と回答の配列 (必須)
   - `question`: 質問
   - `answer`: 回答
@@ -378,6 +385,7 @@ $$
 通知やメッセージを表示するコンポーネント。
 
 **Props:**
+
 - `type`: `"info"` | `"success"` | `"warning"` | `"error"` (デフォルト: `"info"`)
 - `title`: タイトル (オプション)
 - `children`: 内容
@@ -389,9 +397,7 @@ $$
   新しい記事を公開しました！
 </Alert>
 
-<Alert type="success">
-  セットアップが正常に完了しました。
-</Alert>
+<Alert type="success">セットアップが正常に完了しました。</Alert>
 
 <Alert type="warning" title="警告">
   この操作は元に戻せません。
@@ -407,6 +413,7 @@ $$
 YouTube 動画を埋め込むコンポーネント。
 
 **Props:**
+
 - `videoId`: YouTube の動画 ID (必須)
 - `title`: 動画のタイトル (オプション)
 
@@ -421,6 +428,7 @@ YouTube 動画を埋め込むコンポーネント。
 Spotify の音楽を埋め込むコンポーネント。
 
 **Props:**
+
 - `url`: Spotify の URL (必須)
 - `type`: `"track"` | `"album"` | `"playlist"` | `"artist"` (デフォルト: `"track"`)
 - `height`: 高さ (オプション)
@@ -430,8 +438,8 @@ Spotify の音楽を埋め込むコンポーネント。
 ```mdx
 <SpotifyEmbed url="https://open.spotify.com/intl-ja/track/2hrEREhRJDK7FItIqvllmr" />
 
-<SpotifyEmbed 
-  url="https://open.spotify.com/album/xxxxx" 
+<SpotifyEmbed
+  url="https://open.spotify.com/album/xxxxx"
   type="album"
   height={380}
 />
@@ -441,7 +449,7 @@ Spotify の音楽を埋め込むコンポーネント。
 
 以下は、複数のコンポーネントを組み合わせた記事の例です：
 
-```mdx
+````mdx
 ---
 title: "Next.js 16 で作るモダンブログ"
 date: "2025-11-20"
@@ -503,6 +511,7 @@ const greeting = (name: string): string => {
 
 console.log(greeting("World"));
 ```
+````
 
 <SummaryBox title="まとめ">
   Next.js 16 と MDX を使えば、簡単にモダンなブログを構築できます！
