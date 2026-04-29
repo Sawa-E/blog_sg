@@ -1,16 +1,11 @@
-// src/components/posts/TagSearch.tsx（修正版）
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-
-type Tag = {
-  name: string;
-  count: number;
-};
+import { getTagSoftColor, type TagWithCount } from "@/lib/tags";
 
 type TagSearchProps = {
-  allTags: Tag[];
+  allTags: TagWithCount[];
 };
 
 export function TagSearch({ allTags }: TagSearchProps) {
@@ -82,21 +77,6 @@ export function TagSearch({ allTags }: TagSearchProps) {
         inputRef.current?.blur();
         break;
     }
-  };
-
-  // タグの色を生成（ハッシュから）
-  const getTagColor = (tag: string) => {
-    const colors = [
-      "bg-sky-100 text-sky-700 border-sky-200",
-      "bg-cyan-100 text-cyan-700 border-cyan-200",
-      "bg-blue-100 text-blue-700 border-blue-200",
-      "bg-teal-100 text-teal-700 border-teal-200",
-      "bg-emerald-100 text-emerald-700 border-emerald-200",
-    ];
-    const hash = tag
-      .split("")
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return colors[hash % colors.length];
   };
 
   return (
@@ -187,9 +167,7 @@ export function TagSearch({ allTags }: TagSearchProps) {
                   {/* タグ名 */}
                   <div className="flex items-center gap-2">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium border ${getTagColor(
-                        tag.name
-                      )}`}
+                      className={`px-3 py-1 rounded-full text-sm font-medium border ${getTagSoftColor(tag.name)}`}
                     >
                       #{tag.name}
                     </span>

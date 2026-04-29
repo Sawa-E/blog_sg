@@ -1,4 +1,3 @@
-// src/components/posts/Accordion.tsx（新規作成）
 "use client";
 
 import { useState, type ReactNode } from "react";
@@ -10,49 +9,49 @@ type AccordionItem = {
 
 type AccordionProps = {
   items: AccordionItem[];
+  allowMultiple?: boolean;
 };
 
-export function Accordion({ items }: AccordionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+export function Accordion({ items, allowMultiple = false }: AccordionProps) {
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set());
+
+  const toggle = (index: number) => {
+    setOpenSet((prev) => {
+      const next = new Set(allowMultiple ? prev : []);
+      if (prev.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
+  };
 
   return (
-    <div className="my-8 space-y-3">
+    <div className="mdx-accordion">
       {items.map((item, index) => {
-        const isOpen = openIndex === index;
-
+        const isOpen = openSet.has(index);
         return (
-          <div
-            key={index}
-            className="rounded-xl border border-sky-100 bg-white/60 backdrop-blur-sm overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-          >
+          <div key={index} className="mdx-accordion__item" data-open={isOpen}>
             <button
-              onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="w-full px-6 py-4 flex items-center justify-between text-left group"
+              type="button"
+              className="mdx-accordion__btn"
+              aria-expanded={isOpen}
+              onClick={() => toggle(index)}
             >
-              <span className="font-bold text-gray-900 pr-4 group-hover:text-sky-700 transition-colors">
-                {item.question}
-              </span>
+              <span>{item.question}</span>
               <svg
-                className={`w-5 h-5 text-sky-600 flex-shrink-0 transition-transform duration-300 ${
-                  isOpen ? "rotate-180" : ""
-                }`}
+                className="mdx-accordion__icon"
+                viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                viewBox="0 0 24 24"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path d="M6 9l6 6 6-6" />
               </svg>
             </button>
-
             {isOpen && (
-              <div className="px-6 pb-4 text-gray-700 leading-relaxed border-t border-sky-100 pt-4 animate-fade-in">
-                {item.answer}
-              </div>
+              <div className="mdx-accordion__panel mdx-inner">{item.answer}</div>
             )}
           </div>
         );

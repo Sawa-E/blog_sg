@@ -1,39 +1,28 @@
-// src/lib/seo.ts
 import type { Metadata } from "next";
-
-export const SITE_URL = "https://blog-sg.pages.dev";
-export const SITE_NAME = "そーがの日記";
-export const OG_IMAGE_PATH = "/og-image.png";
+import { SITE } from "@/lib/config";
 
 export const baseMetadata: Metadata = {
-  title: SITE_NAME,
-  description: "Soga's blog",
-  metadataBase: new URL(SITE_URL),
+  title: SITE.name,
+  description: SITE.description,
+  metadataBase: new URL(SITE.url),
 
   openGraph: {
-    title: SITE_NAME,
-    description: "Soga's blog",
-    siteName: SITE_NAME,
-    images: [
-      {
-        url: OG_IMAGE_PATH,
-        width: 1200,
-        height: 630,
-      },
-    ],
+    title: SITE.name,
+    description: SITE.description,
+    siteName: SITE.name,
+    images: [{ url: SITE.ogImage, width: 1200, height: 630 }],
     locale: "ja_JP",
     type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: SITE_NAME,
-    description: "Soga's blog",
-    images: [OG_IMAGE_PATH],
+    title: SITE.name,
+    description: SITE.description,
+    images: [SITE.ogImage],
   },
 };
 
-// 🆕 ページごとのメタデータを生成するヘルパー関数
 type GenerateMetadataParams = {
   title: string;
   description: string;
@@ -46,11 +35,11 @@ export function generatePageMetadata({
   title,
   description,
   path,
-  ogImage = OG_IMAGE_PATH,
+  ogImage = SITE.ogImage,
   type = "website",
 }: GenerateMetadataParams): Metadata {
-  const fullTitle = `${title} | ${SITE_NAME}`;
-  const url = `${SITE_URL}${path}`;
+  const fullTitle = `${title} | ${SITE.name}`;
+  const url = `${SITE.url}${path}`;
 
   return {
     title: fullTitle,
@@ -59,15 +48,9 @@ export function generatePageMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      siteName: SITE_NAME,
+      siteName: SITE.name,
       url,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: [{ url: ogImage, width: 1200, height: 630 }],
       locale: "ja_JP",
       type,
     },

@@ -1,4 +1,3 @@
-// src/components/posts/ReadingProgress.tsx（新規作成）
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,26 +6,17 @@ export function ReadingProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      setProgress(scrolled);
+    const onScroll = () => {
+      const el = document.scrollingElement || document.documentElement;
+      const total = el.scrollHeight - el.clientHeight;
+      setProgress(
+        total > 0 ? Math.min(100, Math.max(0, (el.scrollTop / total) * 100)) : 0,
+      );
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <div className="fixed top-0 left-0 w-full h-1 bg-gray-100 z-50">
-      <div
-        className="h-full bg-gradient-to-r from-sky-500 to-cyan-500 transition-all duration-150 ease-out"
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  );
+  return <div className="progress" style={{ width: `${progress}%` }} />;
 }

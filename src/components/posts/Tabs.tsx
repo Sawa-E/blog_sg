@@ -1,7 +1,6 @@
-// src/components/posts/Tabs.tsx（新規作成）
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useId, type ReactNode } from "react";
 
 type Tab = {
   label: string;
@@ -15,33 +14,34 @@ type TabsProps = {
 
 export function Tabs({ tabs }: TabsProps) {
   const [activeTab, setActiveTab] = useState(0);
+  const id = useId();
 
   return (
-    <div className="my-8">
-      {/* タブヘッダー */}
-      <div className="flex flex-wrap gap-2 border-b-2 border-sky-200 mb-6">
+    <div className="mdx-tabs">
+      <div className="mdx-tabs__list" role="tablist">
         {tabs.map((tab, index) => (
           <button
             key={index}
+            type="button"
+            role="tab"
+            id={`${id}-tab-${index}`}
+            aria-controls={`${id}-panel-${index}`}
+            aria-selected={activeTab === index}
+            tabIndex={activeTab === index ? 0 : -1}
+            className="mdx-tabs__tab"
             onClick={() => setActiveTab(index)}
-            className={`
-              px-5 py-3 rounded-t-lg font-semibold text-sm transition-all duration-300
-              flex items-center gap-2
-              ${
-                activeTab === index
-                  ? "bg-gradient-to-r from-sky-500 to-cyan-500 text-white shadow-md -mb-0.5 border-b-2 border-sky-500"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }
-            `}
           >
-            {tab.icon && <span className="text-lg">{tab.icon}</span>}
+            {tab.icon && <span aria-hidden="true">{tab.icon}</span>}
             {tab.label}
           </button>
         ))}
       </div>
-
-      {/* タブコンテンツ */}
-      <div className="rounded-xl border border-sky-100 bg-white/60 backdrop-blur-sm p-6 shadow-sm animate-fade-in">
+      <div
+        role="tabpanel"
+        id={`${id}-panel-${activeTab}`}
+        aria-labelledby={`${id}-tab-${activeTab}`}
+        className="mdx-tabs__panel mdx-inner"
+      >
         {tabs[activeTab].content}
       </div>
     </div>
