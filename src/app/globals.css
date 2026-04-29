@@ -53,7 +53,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 24px;
 }
 
 html, body {
@@ -79,8 +79,20 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   padding: 0 28px;
 }
-@media (max-width: 720px) { .container { padding: 0 18px; } }
-@media (max-width: 420px) { .container { padding: 0 14px; } }
+@media (max-width: 720px) {
+  .container {
+    padding-left: max(22px, env(safe-area-inset-left));
+    padding-right: max(22px, env(safe-area-inset-right));
+  }
+}
+@media (max-width: 420px) {
+  .container {
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+  }
+}
+
+html, body { overflow-x: hidden; }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -105,13 +117,11 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== Header / Nav ===== */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 30;
-  background: rgba(247, 250, 252, 0.82);
-  backdrop-filter: saturate(160%) blur(10px);
-  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  background: var(--bg);
   border-bottom: 1px solid var(--line-soft);
+  padding-top: env(safe-area-inset-top);
 }
 .site-header__inner {
   display: flex;
@@ -220,20 +230,24 @@ a { color: inherit; text-decoration: none; }
   .nav__search { display: none; }
   .nav__toggle { display: inline-flex; }
   .nav__sheet {
-    display: block;
+    display: none;
     position: fixed;
-    top: 56px; left: 0; right: 0;
+    top: calc(56px + env(safe-area-inset-top));
+    left: 0; right: 0;
     background: rgba(247,250,252,0.98);
     backdrop-filter: saturate(160%) blur(14px);
     -webkit-backdrop-filter: saturate(160%) blur(14px);
     border-bottom: 1px solid var(--line-soft);
     padding: 8px 18px 18px;
     z-index: 29;
-    transform: translateY(-110%);
-    transition: transform 240ms cubic-bezier(.2,.8,.2,1);
     box-shadow: 0 12px 24px -16px rgba(11,36,52,0.18);
+    animation: nav-sheet-in 200ms cubic-bezier(.2,.8,.2,1);
   }
-  .nav__sheet.open { transform: translateY(0); }
+  .nav__sheet.open { display: block; }
+  @keyframes nav-sheet-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .nav__sheet a {
     display: block;
     padding: 14px 8px;
@@ -539,14 +553,14 @@ a { color: inherit; text-decoration: none; }
 .prose-post > * + * { margin-top: 1.1em; }
 .prose-post h1 {
   font-size: 28px; font-weight: 600; letter-spacing: -0.015em;
-  margin-top: 1.6em; line-height: 1.2; scroll-margin-top: 96px;
+  margin-top: 1.6em; line-height: 1.2; scroll-margin-top: 24px;
 }
 .prose-post h2 {
   font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
-  margin-top: 2.2em; padding-top: 0.2em; scroll-margin-top: 96px; line-height: 1.3;
+  margin-top: 2.2em; padding-top: 0.2em; scroll-margin-top: 24px; line-height: 1.3;
 }
 .prose-post h3 {
-  font-size: 19px; font-weight: 600; margin-top: 1.8em; scroll-margin-top: 96px; line-height: 1.4;
+  font-size: 19px; font-weight: 600; margin-top: 1.8em; scroll-margin-top: 24px; line-height: 1.4;
 }
 .prose-post p { color: var(--ink); margin: 0; }
 .prose-post a {
@@ -622,7 +636,7 @@ a { color: inherit; text-decoration: none; }
 /* ===== TOC ===== */
 .toc {
   position: sticky;
-  top: 88px;
+  top: 24px;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   font-size: 13px;
@@ -755,7 +769,7 @@ a { color: inherit; text-decoration: none; }
   margin-top: 48px;
   align-items: start;
 }
-.about__side { position: sticky; top: 96px; }
+.about__side { position: sticky; top: 24px; }
 .about__avatar {
   display: block;
   width: 100%;
@@ -900,14 +914,14 @@ a { color: inherit; text-decoration: none; }
 .gs-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 50;
-  background: rgba(11, 36, 52, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  z-index: 100;
+  background: rgba(11, 36, 52, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 80px 18px 18px;
+  padding: calc(56px + env(safe-area-inset-top)) 18px 18px;
   animation: fade-in 180ms ease;
 }
 .gs-modal {
@@ -1093,8 +1107,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 720px) {
-  .gs-backdrop { padding: 56px 12px 12px; }
-  .gs-modal { max-height: calc(100vh - 80px); }
+  .gs-backdrop { padding: calc(24px + env(safe-area-inset-top)) 12px 12px; }
+  .gs-modal { max-height: calc(100vh - 36px - env(safe-area-inset-top)); }
 }
 
 @keyframes fade-in {
