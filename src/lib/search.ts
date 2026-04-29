@@ -65,12 +65,9 @@ export function searchPosts(
   return results.slice(0, MAX_RESULTS);
 }
 
-export const MATCH_STYLES: Record<
-  MatchType,
-  { icon: string; label: string; color: string }
-> = {
-  title: { icon: "📄", label: "タイトル", color: "text-sky-600 bg-sky-50" },
-  summary: { icon: "📝", label: "概要", color: "text-cyan-600 bg-cyan-50" },
-  content: { icon: "📖", label: "本文", color: "text-blue-600 bg-blue-50" },
-  tag: { icon: "🏷️", label: "タグ", color: "text-emerald-600 bg-emerald-50" },
+export const MATCH_LABELS: Record<MatchType, string> = {
+  title: "title",
+  summary: "summary",
+  content: "body",
+  tag: "tag",
 };

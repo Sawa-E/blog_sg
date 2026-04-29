@@ -5,9 +5,9 @@ import { baseMetadata } from "@/lib/seo";
 
 export const metadata = {
   ...baseMetadata,
-  title: "そーがの日記",
-  openGraph: { ...baseMetadata.openGraph, title: "そーがの日記" },
-  twitter: { ...baseMetadata.twitter, title: "そーがの日記" },
+  title: "さわの日記",
+  openGraph: { ...baseMetadata.openGraph, title: "さわの日記" },
+  twitter: { ...baseMetadata.twitter, title: "さわの日記" },
 };
 
 function formatDateLong(iso: string): string {
@@ -41,7 +41,7 @@ export default function HomePage() {
     <div className="app-route">
       <section className="container hero">
         <div className="hero__intro">
-          <span className="eyebrow">Sōga&apos;s logbook · {new Date().getFullYear()}</span>
+          <span className="eyebrow">Sawa&apos;s logbook · {new Date().getFullYear()}</span>
           <h1>
             ゆるっと書きためる、<em>日々のこと</em>。
           </h1>
@@ -52,7 +52,7 @@ export default function HomePage() {
             <div className="hero__avatar">
               <span className="avatar" />
               <span>
-                そーが <span style={{ color: "var(--ink-3)" }}>· Chiba</span>
+                さわ <span style={{ color: "var(--ink-3)" }}>· Chiba</span>
               </span>
             </div>
             <span style={{ color: "var(--ink-3)", fontSize: 13 }}>

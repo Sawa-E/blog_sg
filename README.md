@@ -1,4 +1,4 @@
-# そーがの日記 (Soga's Blog)
+# さわの日記 (Sawa's Blog)
 
 Next.js 16 + TypeScript + MDX で作っている個人ブログ。
 書くこと以外の摩擦をできる限りゼロにすることを目標に、海をテーマにした静かなデザインで構築しています。
@@ -126,4 +126,4 @@ blog_sg/
 
 ## 作者
 
-- **そーが** ([@Sawa-E](https://github.com/Sawa-E)) — 千葉
+- **さわ** ([@Sawa-E](https://github.com/Sawa-E)) — 千葉

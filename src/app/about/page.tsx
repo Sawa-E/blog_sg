@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "このブログについて",
-  description: "そーがの自己紹介ページ",
+  description: "さわの自己紹介ページ",
   path: "/about",
 });
 
 const HANDLES = [
-  { label: "name", value: "そーが" },
+  { label: "name", value: "さわ" },
   { label: "based", value: "千葉 / Chiba" },
   { label: "github", value: "@Sawa-E" },
 ];
@@ -40,7 +40,7 @@ export default function AboutPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icons/profile.png"
-            alt="そーがの日記アイコン"
+            alt="さわの日記アイコン"
             className="about__avatar"
           />
           <ul className="about__handles">
@@ -57,7 +57,7 @@ export default function AboutPage() {
           <h1>
             はじめまして、
             <br />
-            そーがです。
+            さわです。
           </h1>
           <p>
             工学系の大学院修士1年生。制御工学の研究をしながら、

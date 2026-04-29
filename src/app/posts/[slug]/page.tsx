@@ -41,11 +41,11 @@ function formatDateLong(iso: string): string {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) return { title: "記事が見つかりません | そーがの日記" };
+  if (!post) return { title: "記事が見つかりません | さわの日記" };
 
   return generatePageMetadata({
     title: post.title,
-    description: post.summary ?? "そーがの日記のブログ記事",
+    description: post.summary ?? "さわの日記のブログ記事",
     path: `/posts/${slug}`,
     type: "article",
   });
@@ -98,7 +98,7 @@ export default async function PostPage({ params }: Props) {
 
               <div className="article__meta">
                 <span className="article__author">
-                  <span className="avatar" /> そーが
+                  <span className="avatar" /> さわ
                 </span>
                 <span className="sep" />
                 <span>{formatDateLong(post.date)}</span>

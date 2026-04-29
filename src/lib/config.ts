@@ -1,6 +1,6 @@
 export const SITE = {
-  name: "そーがの日記",
-  description: "Soga's blog",
+  name: "さわの日記",
+  description: "Sawa's blog",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blog-sg.pages.dev",
   ogImage: "/og-image.png",
   repository: "https://github.com/Sawa-E/blog_sg",

@@ -24,14 +24,36 @@ export function Header({ allPosts }: HeaderProps) {
     <>
       <header className="site-header">
         <div className="container site-header__inner">
-          <Link href="/" className="brand" aria-label="そーがの日記">
+          <Link href="/" className="brand" aria-label="さわの日記">
             <span className="brand__mark" />
-            <span className="brand__name">そーがの日記</span>
-            <span className="brand__sub">soga.log</span>
+            <span className="brand__name">さわの日記</span>
+            <span className="brand__sub">sawa.log</span>
           </Link>
 
           <nav className="nav" aria-label="メインナビ">
             <Nav variant="desktop" />
+            <button
+              type="button"
+              className="nav__search"
+              aria-label="検索を開く"
+              onClick={() => setSearchOpen(true)}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+              <span>検索</span>
+            </button>
             <button
               type="button"
               className="nav__toggle"

@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "タグ一覧",
-  description: "そーがの日記の全タグ一覧。記事をタグで探せます。",
+  description: "さわの日記の全タグ一覧。記事をタグで探せます。",
   path: "/tags",
 });
 
