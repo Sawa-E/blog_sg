@@ -1,7 +1,7 @@
 export const SITE = {
   name: "さわの日記",
   description: "Sawa's blog",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blog-sg.pages.dev",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blog.sawakun.com",
   ogImage: "/og-image.png",
   repository: "https://github.com/Sawa-E/blog_sg",
 } as const;
